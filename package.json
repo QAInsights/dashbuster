@@ -1,0 +1,27 @@
+{
+  "name": "dashbuster",
+  "version": "1.0.0",
+  "description": "Chrome extension to replace em dashes",
+  "scripts": {
+    "test": "jest",
+    "test:unit": "jest tests/unit tests/manifest.test.js tests/performance.test.js",
+    "test:e2e": "jest tests/e2e --testTimeout=30000",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "puppeteer": "^21.6.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": ["<rootDir>/tests/setup.js"],
+    "moduleFileExtensions": ["js", "json"],
+    "testMatch": ["**/tests/**/*.test.js"],
+    "collectCoverageFrom": [
+      "*.js",
+      "!generate_icons.py",
+      "!resize_icon.py"
+    ]
+  }
+}

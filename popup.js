@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateStatus(enabled) {
     status.textContent = enabled ? 'ON' : 'OFF';
     status.className = 'status ' + (enabled ? 'on' : 'off');
-    counterEl.style.color = enabled ? '#2196F3' : '#a0aec0';
+    counterEl.style.color = enabled ? '#0d9488' : '#a0aec0';
   }
 
   function updateCounter(value) {
