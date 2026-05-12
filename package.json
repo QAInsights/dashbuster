@@ -20,7 +20,6 @@
     "testMatch": ["**/tests/**/*.test.js"],
     "collectCoverageFrom": [
       "*.js",
-      "!generate_icons.py",
       "!resize_icon.py"
     ]
   }
