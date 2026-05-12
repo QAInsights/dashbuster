@@ -73,7 +73,12 @@ describe('DashBuster E2E', () => {
           sync: {
             get: (keys, cb) => cb({ emDashReplacer: { enabled: false, replacement: '-' } }),
             set: () => {}
-          }
+          },
+          local: {
+            get: (keys, cb) => cb({ siteStats: {} }),
+            set: () => {}
+          },
+          onChanged: { addListener: () => {} }
         },
         runtime: { onMessage: { addListener: () => {} }, sendMessage: () => {} },
         tabs: { query: () => {} }

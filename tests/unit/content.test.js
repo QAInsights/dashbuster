@@ -117,7 +117,6 @@ describe('content.js utility functions', () => {
 
 describe('content.js MutationObserver safety', () => {
   test('does not observe characterData (prevents infinite loops)', () => {
-    // Read content.js source and verify no characterData: true
     const fs = require('fs');
     const path = require('path');
     const src = fs.readFileSync(path.join(__dirname, '..', '..', 'content.js'), 'utf8');
@@ -129,5 +128,14 @@ describe('content.js MutationObserver safety', () => {
     const path = require('path');
     const src = fs.readFileSync(path.join(__dirname, '..', '..', 'content.js'), 'utf8');
     expect(src).toContain('isProcessing');
+  });
+
+  test('has skipSiteStats flag to prevent double-counting on replacement change', () => {
+    const fs = require('fs');
+    const path = require('path');
+    const src = fs.readFileSync(path.join(__dirname, '..', '..', 'content.js'), 'utf8');
+    expect(src).toContain('skipSiteStats');
+    expect(src).toMatch(/skipSiteStats\s*=\s*true/);
+    expect(src).toMatch(/skipSiteStats\s*=\s*false/);
   });
 });

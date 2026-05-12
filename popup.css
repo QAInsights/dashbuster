@@ -142,6 +142,82 @@ input:checked + .slider:before {
   transform: scale(1.15);
 }
 
+.hall-of-shame {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 14px 18px;
+  border-radius: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.hall-of-shame h2 {
+  font-size: 11px;
+  font-weight: 700;
+  color: #a0aec0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.shame-subtitle {
+  font-size: 10px;
+  color: #a0aec0;
+  margin-bottom: 10px;
+}
+
+.shame-list {
+  list-style: none;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.shame-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.shame-list::-webkit-scrollbar-thumb {
+  background: rgba(13, 148, 136, 0.3);
+  border-radius: 4px;
+}
+
+.shame-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+  font-size: 13px;
+}
+
+.shame-item:last-child {
+  border-bottom: none;
+}
+
+.shame-rank {
+  font-weight: 700;
+  color: #0d9488;
+  width: 20px;
+  flex-shrink: 0;
+}
+
+.shame-host {
+  color: #2d3748;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 6px;
+}
+
+.shame-count {
+  font-weight: 700;
+  color: #0d9488;
+  flex-shrink: 0;
+  padding-left: 8px;
+}
+
 .settings {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);

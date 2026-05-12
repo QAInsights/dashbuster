@@ -59,6 +59,45 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function renderHallOfShame(siteStats) {
+    const list = document.getElementById('shame-list');
+    if (!list) return;
+
+    const entries = Object.entries(siteStats || {})
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+
+    list.innerHTML = '';
+    if (entries.length === 0) {
+      const li = document.createElement('li');
+      li.className = 'shame-item';
+      li.innerHTML = '<span class="shame-host" style="color:#a0aec0;font-style:italic;">No data yet. Browse around!</span>';
+      list.appendChild(li);
+      return;
+    }
+
+    entries.forEach(([host, count], index) => {
+      const li = document.createElement('li');
+      li.className = 'shame-item';
+      li.innerHTML = `
+        <span class="shame-rank">#${index + 1}</span>
+        <span class="shame-host" title="${host}">${host}</span>
+        <span class="shame-count">${count.toLocaleString()}</span>
+      `;
+      list.appendChild(li);
+    });
+  }
+
+  function loadHallOfShame() {
+    chrome.storage.local.get(['siteStats'], (result) => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        return;
+      }
+      renderHallOfShame(result.siteStats);
+    });
+  }
+
   // Poll for real-time count updates while popup is open
   const countInterval = setInterval(() => {
     requestCount();
@@ -68,6 +107,13 @@ document.addEventListener('DOMContentLoaded', () => {
   chrome.runtime.onMessage.addListener((request) => {
     if (request.action === 'countUpdate') {
       updateCounter(request.count);
+    }
+  });
+
+  // Listen for storage changes to update Hall of Shame in real time
+  chrome.storage.onChanged.addListener((changes) => {
+    if (changes.siteStats) {
+      renderHallOfShame(changes.siteStats.newValue);
     }
   });
 
@@ -85,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     requestCount();
+    loadHallOfShame();
   });
 
   toggle.addEventListener('change', () => {

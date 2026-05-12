@@ -5,6 +5,8 @@
 
 // --- chrome.storage mock ---
 const storageData = {};
+const localStorageData = {};
+const storageListeners = [];
 global.chrome = {
   storage: {
     sync: {
@@ -19,6 +21,27 @@ global.chrome = {
         Object.assign(storageData, data);
         if (callback) callback();
       })
+    },
+    local: {
+      get: jest.fn((keys, callback) => {
+        const result = {};
+        keys.forEach((k) => {
+          result[k] = localStorageData[k];
+        });
+        callback(result);
+      }),
+      set: jest.fn((data, callback) => {
+        Object.assign(localStorageData, data);
+        if (callback) callback();
+      })
+    },
+    onChanged: {
+      addListener: jest.fn((fn) => storageListeners.push(fn)),
+      removeListener: jest.fn((fn) => {
+        const idx = storageListeners.indexOf(fn);
+        if (idx !== -1) storageListeners.splice(idx, 1);
+      }),
+      _trigger: (changes) => storageListeners.forEach((fn) => fn(changes))
     }
   },
   runtime: {
@@ -44,5 +67,7 @@ global.chrome = {
 // Reset storage before each test
 beforeEach(() => {
   Object.keys(storageData).forEach((k) => delete storageData[k]);
+  Object.keys(localStorageData).forEach((k) => delete localStorageData[k]);
+  storageListeners.length = 0;
   jest.clearAllMocks();
 });

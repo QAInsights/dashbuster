@@ -18,6 +18,10 @@
   let isProcessing = false;
   let currentUrl = location.href;
   let titleObserver = null;
+  let siteLifetimeDelta = 0;
+  let statsTimeout = null;
+  let skipSiteStats = false;
+  const currentHostname = location.hostname;
 
   function getReplacementChar() {
     return replacement;
@@ -43,6 +47,26 @@
     }, 100);
   }
 
+  function addSiteStat(count) {
+    siteLifetimeDelta += count;
+    if (statsTimeout) return;
+    statsTimeout = setTimeout(() => {
+      statsTimeout = null;
+      const delta = siteLifetimeDelta;
+      siteLifetimeDelta = 0;
+      if (delta === 0) return;
+      try {
+        chrome.storage.local.get(['siteStats'], (result) => {
+          const stats = result.siteStats || {};
+          stats[currentHostname] = (stats[currentHostname] || 0) + delta;
+          chrome.storage.local.set({ siteStats: stats });
+        });
+      } catch (e) {
+        // Extension context invalidated
+      }
+    }, 500);
+  }
+
   function replaceInTextNode(node) {
     if (originalMap.has(node)) return;
 
@@ -53,6 +77,7 @@
     originalMap.set(node, text);
     node.textContent = text.replaceAll(EM_DASH, getReplacementChar());
     replacedCount += count;
+    if (!skipSiteStats) addSiteStat(count);
     broadcastCount();
   }
 
@@ -75,6 +100,7 @@
     originalMap.set(element, value);
     element.value = value.replaceAll(EM_DASH, getReplacementChar());
     replacedCount += count;
+    if (!skipSiteStats) addSiteStat(count);
     broadcastCount();
   }
 
@@ -208,6 +234,8 @@
     }
     originalMap.clear();
     replacedCount = 0;
+    siteLifetimeDelta = 0;
+    skipSiteStats = false;
     broadcastCount();
     currentUrl = location.href;
   }
@@ -220,6 +248,7 @@
     }
 
     if (isEnabled && replacement !== replacementChar) {
+      skipSiteStats = true;
       restoreDocument();
     }
 
@@ -233,6 +262,7 @@
     }
 
     performScan();
+    skipSiteStats = false;
     startObserver();
     startUrlTracking();
   }
@@ -304,6 +334,15 @@
       sendResponse({ enabled: isEnabled, replacement, count: replacedCount });
     } else if (request.action === 'getCount') {
       sendResponse({ count: replacedCount });
+    } else if (request.action === 'getSiteStats') {
+      try {
+        chrome.storage.local.get(['siteStats'], (result) => {
+          sendResponse({ siteStats: result.siteStats || {} });
+        });
+      } catch (e) {
+        sendResponse({ siteStats: {} });
+      }
+      return true;
     }
     return true;
   });
