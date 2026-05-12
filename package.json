@@ -19,8 +19,7 @@
     "moduleFileExtensions": ["js", "json"],
     "testMatch": ["**/tests/**/*.test.js"],
     "collectCoverageFrom": [
-      "*.js",
-      "!resize_icon.py"
+      "*.js"
     ]
   }
 }
