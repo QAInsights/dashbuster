@@ -17,6 +17,12 @@ A Chrome Manifest V3 extension that finds and replaces em dashes on any web page
 - **Restore Originals** 
 - **Persistent State** 
 
+## Screenshots
+
+![1](./screenshots/1.jpg)
+![2](./screenshots/2.jpg)
+
+
 ## How it Works
 
 When enabled, DashBuster scans the page for em dash characters (Unicode U+2014) and replaces them with your chosen character. It stores the original text values in a Map, so when you disable it, the page is restored precisely no string-reverse guessing.
