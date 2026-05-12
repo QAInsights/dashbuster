@@ -10,6 +10,11 @@ body {
   background: linear-gradient(145deg, #f5f7fa 0%, #e4e8ec 100%);
   color: #212529;
   padding: 20px;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 .header {
@@ -169,17 +174,6 @@ input:checked + .slider:before {
 
 .shame-list {
   list-style: none;
-  max-height: 120px;
-  overflow-y: auto;
-}
-
-.shame-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.shame-list::-webkit-scrollbar-thumb {
-  background: rgba(13, 148, 136, 0.3);
-  border-radius: 4px;
 }
 
 .shame-item {

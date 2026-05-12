@@ -2,11 +2,10 @@
   "manifest_version": 3,
   "name": "DashBuster",
   "version": "1.0.0",
-  "description": "Replace em dashes with hyphens, spaces, robot emojis, or poop emojis",
+  "description": "Replace em dashes on any website. Pick your replacement character and see which sites overuse them the most.",
   "permissions": [
     "activeTab",
-    "storage",
-    "tabs"
+    "storage"
   ],
   "background": {
     "service_worker": "background.js"

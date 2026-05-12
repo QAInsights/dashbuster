@@ -73,7 +73,7 @@ describe('Manifest validation', () => {
   });
 
   test('permissions are minimal and valid', () => {
-    const allowed = ['activeTab', 'storage', 'tabs'];
+    const allowed = ['activeTab', 'storage'];
     manifest.permissions.forEach((p) => {
       expect(allowed).toContain(p);
     });
