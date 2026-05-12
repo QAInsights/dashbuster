@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <img src="icon48.svg" alt="icon" class="icon">
+    <h1>DashBuster</h1>
+  </div>
+
+  <div class="toggle-section">
+    <label class="switch">
+      <input type="checkbox" id="toggle">
+      <span class="slider"></span>
+    </label>
+    <span id="status" class="status off">OFF</span>
+  </div>
+
+  <div class="counter-section">
+    <span class="counter-label">Em Dashes Replaced</span>
+    <span id="counter" class="counter">0</span>
+  </div>
+
+  <div class="settings">
+    <h2>Replacement</h2>
+    <label class="radio-label">
+      <input type="radio" name="replacement" value="-" checked>
+      <span>Hyphen (&minus;)</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="replacement" value=" ">
+      <span>Space</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="replacement" value="🤖">
+      <span>Robot (&#x1F916;)</span>
+    </label>
+    <label class="radio-label">
+      <input type="radio" name="replacement" value="💩">
+      <span>Poop (&#x1F4A9;)</span>
+    </label>
+  </div>
+
+  <div class="footer">
+    <a href="https://qainsights.com" target="_blank">QAInsights</a>
+    <a href="https://buymeacoffee.com/qainsights" target="_blank">Support</a>
+    <a href="https://ai.dosa.dev" target="_blank">ai.dosa.dev</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
